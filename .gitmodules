@@ -1,0 +1,3 @@
+[submodule "Plugins/dungeon-forge"]
+	path = Plugins/dungeon-forge
+	url = https://github.com/rickym-h/dungeon-forge.git
