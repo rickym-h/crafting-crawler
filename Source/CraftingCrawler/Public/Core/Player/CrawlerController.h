@@ -27,11 +27,15 @@ protected:
 
 	UFUNCTION()
 	void Move(const FInputActionValue& Value);
+	UFUNCTION()
+	void Primary(const FInputActionValue& Value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputMappingContext> MappingContext;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> PrimaryAction;
 
 public:
 	// Called every frame

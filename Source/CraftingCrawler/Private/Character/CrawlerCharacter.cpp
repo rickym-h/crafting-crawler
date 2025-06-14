@@ -56,9 +56,7 @@ void ACrawlerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 {
-	// const FVector DirectionVector = InputActionValue.Get<FVector>().GetSafeNormal();
-	// const FVector MovementVector = DirectionVector * GetWorld()->GetDeltaSeconds() * MovementSpeed;
-	// AddActorLocalOffset(MovementVector, true, nullptr, ETeleportType::None);
+	if (bIsAttacking) return;
 
 	const FVector DirectionVector = InputActionValue.Get<FVector>().GetClampedToMaxSize(1.0f);
 	if (!DirectionVector.IsNearlyZero())
@@ -70,3 +68,13 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 	SkeletalMesh->SetRelativeRotation(Direction);
 }
 
+void ACrawlerCharacter::AttackPrimary()
+{
+	bIsAttacking = true;
+	
+	UAnimInstance* AnimInstance = SkeletalMesh->GetAnimInstance();
+	if (PrimaryAttackMontage && AnimInstance && !AnimInstance->Montage_IsPlaying(PrimaryAttackMontage))
+	{
+		AnimInstance->Montage_Play(PrimaryAttackMontage);
+	}
+}

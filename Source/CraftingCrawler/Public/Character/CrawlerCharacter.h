@@ -9,6 +9,7 @@
 #include "CrawlerCharacter.generated.h"
 
 
+class UFloatingPawnMovement;
 class UCapsuleComponent;
 struct FInputActionValue;
 
@@ -39,8 +40,10 @@ protected:
 	TObjectPtr<UCameraComponent> Camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
-	class UFloatingPawnMovement* MovementComponent;
+	TObjectPtr<UFloatingPawnMovement> MovementComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	TObjectPtr<UAnimMontage> PrimaryAttackMontage;
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -49,4 +52,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& InputActionValue);
+	void AttackPrimary();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
+	bool bIsAttacking;
+	
 };

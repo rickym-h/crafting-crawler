@@ -33,6 +33,7 @@ void ACrawlerController::SetupInputComponent()
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACrawlerController::Move);
+		EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Triggered, this, &ACrawlerController::Primary);
 	}
 }
 
@@ -42,6 +43,16 @@ void ACrawlerController::Move(const FInputActionValue& Value)
 	{
 		CrawlerCharacter->Move(Value);
 	}
+}
+
+void ACrawlerController::Primary(const FInputActionValue& Value)
+{
+	// If in combat mode - attack
+	if (ACrawlerCharacter* CrawlerCharacter = Cast<ACrawlerCharacter>(GetPawn()))
+	{
+		CrawlerCharacter->AttackPrimary();
+	}
+	// TODO Otherwise - interact 
 }
 
 // Called every frame
