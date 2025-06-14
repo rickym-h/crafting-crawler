@@ -65,5 +65,8 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 	{
 		AddMovementInput(DirectionVector);
 	}
+
+	FRotator Direction = DirectionVector.Rotation() + FRotator(0.0f, 270.0f, 0.0f);
+	SkeletalMesh->SetRelativeRotation(Direction);
 }
 
