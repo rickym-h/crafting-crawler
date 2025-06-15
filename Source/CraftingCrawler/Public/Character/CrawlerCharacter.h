@@ -5,17 +5,16 @@
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
 #include "Components/HealthComponent.h"
+#include "GameFramework/Character.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "CrawlerCharacter.generated.h"
 
 
-class UFloatingPawnMovement;
-class UCapsuleComponent;
 struct FInputActionValue;
 
 UCLASS()
-class CRAFTINGCRAWLER_API ACrawlerCharacter : public APawn
+class CRAFTINGCRAWLER_API ACrawlerCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -31,20 +30,12 @@ protected:
 	TObjectPtr<USceneComponent> Root;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<USkeletalMeshComponent> SkeletalMesh;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UCapsuleComponent> CollisionCapsule;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USpringArmComponent> SpringArm;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> Camera;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UHealthComponent> HealthComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
-	TObjectPtr<UFloatingPawnMovement> MovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UAnimMontage> PrimaryAttackMontage;

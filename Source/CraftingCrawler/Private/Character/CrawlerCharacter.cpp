@@ -15,12 +15,12 @@ ACrawlerCharacter::ACrawlerCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	
-	CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>("CollisionCapsule");
-	SetRootComponent(CollisionCapsule);
-	CollisionCapsule->SetCapsuleSize(42.0f, 80.0f);
-	CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	CollisionCapsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
-	CollisionCapsule->SetGenerateOverlapEvents(true);
+	// CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>("CollisionCapsule");
+	// SetRootComponent(CollisionCapsule);
+	// CollisionCapsule->SetCapsuleSize(42.0f, 80.0f);
+	// CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	// CollisionCapsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+	// CollisionCapsule->SetGenerateOverlapEvents(true);
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
@@ -28,11 +28,6 @@ ACrawlerCharacter::ACrawlerCharacter()
 
 	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
-
-	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>("SkeletalMesh");
-	SkeletalMesh->SetupAttachment(RootComponent);
-
-	MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 	HealthComponent->InitHealthComponent(3);
@@ -68,14 +63,14 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 	}
 
 	FRotator Direction = DirectionVector.Rotation() + FRotator(0.0f, 270.0f, 0.0f);
-	SkeletalMesh->SetRelativeRotation(Direction);
+	GetMesh()->SetRelativeRotation(Direction);
 }
 
 void ACrawlerCharacter::AttackPrimary()
 {
 	bIsAttacking = true;
 	
-	UAnimInstance* AnimInstance = SkeletalMesh->GetAnimInstance();
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (PrimaryAttackMontage && AnimInstance && !AnimInstance->Montage_IsPlaying(PrimaryAttackMontage))
 	{
 		AnimInstance->Montage_Play(PrimaryAttackMontage);
