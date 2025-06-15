@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Character.h"
 #include "BaseEnemy.generated.h"
 
 class UHealthComponent;
 
 UCLASS()
-class CRAFTINGCRAWLER_API ABaseEnemy : public APawn
+class CRAFTINGCRAWLER_API ABaseEnemy : public ACharacter
 {
 	GENERATED_BODY()
 
