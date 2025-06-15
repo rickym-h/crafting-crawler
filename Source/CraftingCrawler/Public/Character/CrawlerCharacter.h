@@ -36,6 +36,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UHealthComponent> HealthComponent;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UStaticMeshComponent> AttackCone;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UAnimMontage> PrimaryAttackMontage;
@@ -48,7 +51,7 @@ public:
 
 	void Move(const FInputActionValue& InputActionValue);
 	
-	void ApplyDamageInRadius(const float DamageAmount, const float Radius);
+	void ApplyDamageInRange(const float DamageAmount, const float Range);
 	
 	void AttackPrimary();
 

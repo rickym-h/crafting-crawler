@@ -4,6 +4,7 @@
 #include "CraftingCrawler/Public/Character/CrawlerCharacter.h"
 
 #include "InputActionValue.h"
+#include "Core/CrawlerGameInstance.h"
 #include "Enemies/BaseEnemy.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -15,14 +16,6 @@ ACrawlerCharacter::ACrawlerCharacter()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	
-	// CollisionCapsule = CreateDefaultSubobject<UCapsuleComponent>("CollisionCapsule");
-	// SetRootComponent(CollisionCapsule);
-	// CollisionCapsule->SetCapsuleSize(42.0f, 80.0f);
-	// CollisionCapsule->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-	// CollisionCapsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
-	// CollisionCapsule->SetGenerateOverlapEvents(true);
-
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
 	SpringArm->TargetArmLength = 1000.0f;
@@ -32,6 +25,9 @@ ACrawlerCharacter::ACrawlerCharacter()
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 	HealthComponent->InitHealthComponent(3);
+
+	AttackCone = CreateDefaultSubobject<UStaticMeshComponent>("Attack Cone");
+	AttackCone->SetupAttachment(GetMesh());
 }
 
 // Called when the game starts or when spawned
@@ -67,37 +63,16 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 	GetMesh()->SetRelativeRotation(Direction);
 }
 
-void ACrawlerCharacter::ApplyDamageInRadius(const float DamageAmount, const float Radius)
+void ACrawlerCharacter::ApplyDamageInRange(const float DamageAmount, const float Range)
 {
-	const FVector Origin = GetActorLocation();
+	AttackCone->SetWorldScale3D(FVector(Range, Range, Range));
+	
+	TArray<AActor*> HitActors;
+	AttackCone->GetOverlappingActors(HitActors, ABaseEnemy::StaticClass());
 
-	// Step 1: Sphere overlap to find nearby actors
-	TArray<FHitResult> HitResults;
-	const FVector SphereCenter = Origin;
-	const float SphereRadius = Radius;
-
-	TArray<AActor*> IgnoredActors;
-	IgnoredActors.Add(this);
-
-	UKismetSystemLibrary::SphereTraceMulti(
-		GetWorld(),
-		SphereCenter,
-		SphereCenter,
-		SphereRadius,
-		UEngineTypes::ConvertToTraceType(ECC_Pawn),
-		false,
-		IgnoredActors,
-		EDrawDebugTrace::ForDuration,
-		HitResults,
-		true
-	);
-
-	for (const FHitResult& Hit : HitResults)
-	{
-		AActor* Target = Hit.GetActor();
-		if (!Target || Target == this) continue;
-		
-		UGameplayStatics::ApplyDamage(Target, DamageAmount, GetController(), this, UDamageType::StaticClass());
+	for (const auto Enemy : HitActors)
+	{		
+		UGameplayStatics::ApplyDamage(Enemy, DamageAmount, GetController(), this, UDamageType::StaticClass());
 	}
 }
 
@@ -111,5 +86,8 @@ void ACrawlerCharacter::AttackPrimary()
 		AnimInstance->Montage_Play(PrimaryAttackMontage);
 	}
 
-	ApplyDamageInRadius(1, 200);
+	if (const UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this)))
+	{
+		ApplyDamageInRange(GameInstance->GetAttack(), 1.5f);
+	}
 }
