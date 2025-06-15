@@ -4,8 +4,9 @@
 #include "CraftingCrawler/Public/Character/CrawlerCharacter.h"
 
 #include "InputActionValue.h"
-#include "Components/CapsuleComponent.h"
-#include "GameFramework/FloatingPawnMovement.h"
+#include "Enemies/BaseEnemy.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 // Sets default values
@@ -66,6 +67,40 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 	GetMesh()->SetRelativeRotation(Direction);
 }
 
+void ACrawlerCharacter::ApplyDamageInRadius(const float DamageAmount, const float Radius)
+{
+	const FVector Origin = GetActorLocation();
+
+	// Step 1: Sphere overlap to find nearby actors
+	TArray<FHitResult> HitResults;
+	const FVector SphereCenter = Origin;
+	const float SphereRadius = Radius;
+
+	TArray<AActor*> IgnoredActors;
+	IgnoredActors.Add(this);
+
+	UKismetSystemLibrary::SphereTraceMulti(
+		GetWorld(),
+		SphereCenter,
+		SphereCenter,
+		SphereRadius,
+		UEngineTypes::ConvertToTraceType(ECC_Pawn),
+		false,
+		IgnoredActors,
+		EDrawDebugTrace::ForDuration,
+		HitResults,
+		true
+	);
+
+	for (const FHitResult& Hit : HitResults)
+	{
+		AActor* Target = Hit.GetActor();
+		if (!Target || Target == this) continue;
+		
+		UGameplayStatics::ApplyDamage(Target, DamageAmount, GetController(), this, UDamageType::StaticClass());
+	}
+}
+
 void ACrawlerCharacter::AttackPrimary()
 {
 	bIsAttacking = true;
@@ -75,4 +110,6 @@ void ACrawlerCharacter::AttackPrimary()
 	{
 		AnimInstance->Montage_Play(PrimaryAttackMontage);
 	}
+
+	ApplyDamageInRadius(1, 200);
 }

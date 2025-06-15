@@ -19,6 +19,8 @@ ABaseEnemy::ABaseEnemy()
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+
+	HealthComponent->InitHealthComponent(1);
 	
 }
 

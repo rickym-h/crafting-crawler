@@ -47,6 +47,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& InputActionValue);
+	
+	void ApplyDamageInRadius(const float DamageAmount, const float Radius);
+	
 	void AttackPrimary();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
