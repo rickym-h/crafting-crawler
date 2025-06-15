@@ -24,8 +24,7 @@ protected:
 	
 	// Called when the game starts
 	virtual void BeginPlay() override;
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	int32 Health;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")

@@ -6,6 +6,8 @@
 #include "Engine/GameInstance.h"
 #include "CrawlerGameInstance.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGoldChangedSignature, int32, Gold);
+
 /**
  * 
  */
@@ -29,12 +31,19 @@ public:
 	bool SpendGold(const int32 Cost);
 	UFUNCTION(BlueprintCallable)
 	int32 AddGold(const int32 GoldToAdd);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnGoldChangedSignature OnGoldChangedDelegate;
+	
 	UFUNCTION(BlueprintCallable)
 	int32 GetAttack() const;
 	UFUNCTION(BlueprintCallable)
 	int32 GetDefence() const;
 
 protected:
+	// Game
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 DungeonDepth;
 
 	// Stats
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)

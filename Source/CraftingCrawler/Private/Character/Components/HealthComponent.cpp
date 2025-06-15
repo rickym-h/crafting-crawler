@@ -3,6 +3,10 @@
 
 #include "Character/Components/HealthComponent.h"
 
+#include "Core/CrawlerGameInstance.h"
+#include "Enemies/BaseEnemy.h"
+#include "Kismet/GameplayStatics.h"
+
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
@@ -24,6 +28,14 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 	{
 		GetOwner()->Destroy();
 		// Dying particle effects here?
+
+		if (Cast<ABaseEnemy>(DamagedActor))
+		{
+			if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this)))
+			{
+				GameInstance->AddGold(5);
+			}
+		}
 	}
 }
 

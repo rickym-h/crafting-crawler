@@ -3,8 +3,9 @@
 
 #include "Core/CrawlerGameInstance.h"
 
-UCrawlerGameInstance::UCrawlerGameInstance(): Gold(0), Attack(1), Defence(0), HealthPotCount(0), HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
+UCrawlerGameInstance::UCrawlerGameInstance(): DungeonDepth(1), Gold(0), Attack(1), Defence(0), HealthPotCount(0), HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
 {
+	OnGoldChangedDelegate.Broadcast(Gold);
 }
 
 int32 UCrawlerGameInstance::GetGold() const
@@ -17,6 +18,7 @@ bool UCrawlerGameInstance::SpendGold(const int32 Cost)
 	if (Gold >= Cost)
 	{
 		Gold -= Cost;
+		OnGoldChangedDelegate.Broadcast(Gold);
 		return true;
 	}
 	return false;
@@ -25,6 +27,7 @@ bool UCrawlerGameInstance::SpendGold(const int32 Cost)
 int32 UCrawlerGameInstance::AddGold(const int32 GoldToAdd)
 {
 	Gold += GoldToAdd;
+	OnGoldChangedDelegate.Broadcast(Gold);
 	return Gold;
 }
 
