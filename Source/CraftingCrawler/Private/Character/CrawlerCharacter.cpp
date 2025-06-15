@@ -33,6 +33,9 @@ ACrawlerCharacter::ACrawlerCharacter()
 	SkeletalMesh->SetupAttachment(RootComponent);
 
 	MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	HealthComponent->InitHealthComponent(3);
 }
 
 // Called when the game starts or when spawned
