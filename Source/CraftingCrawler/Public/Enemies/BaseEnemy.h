@@ -25,6 +25,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UHealthComponent> HealthComponent;
 
+	virtual void Destroyed() override;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

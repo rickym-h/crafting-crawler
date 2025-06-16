@@ -9,6 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnGoldChangedSignature, int32, GoldValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackChangedSignature, int32, AttackValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDefenceChangedSignature, int32, DefenceValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemiesChangedSignature, int32, EnemyCount);
 
 /**
  * 
@@ -40,6 +41,8 @@ public:
 	FOnAttackChangedSignature OnAttackChangedDelegate;
 	UPROPERTY(BlueprintAssignable)
 	FOnDefenceChangedSignature OnDefenceChangedDelegate;
+	UPROPERTY(BlueprintAssignable)
+	FOnEnemiesChangedSignature OnEnemiesChangedDelegate;
 	
 	UFUNCTION(BlueprintCallable)
 	int32 GetAttack() const;
@@ -49,11 +52,20 @@ public:
 	int32 GetDefence() const;
 	UFUNCTION(BlueprintCallable)
 	int32 UpgradeDefence(const int32 DefenceIncrement);
+	
+	UFUNCTION(BlueprintCallable)
+	int32 GetEnemyCount() const;
+	UFUNCTION(BlueprintCallable)
+	int32 IncrementEnemyCount();
+	UFUNCTION(BlueprintCallable)
+	int32 DecrementEnemyCount();
 
 protected:
 	// Game
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 DungeonDepth;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	int32 EnemyCount;
 
 	// Stats
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
