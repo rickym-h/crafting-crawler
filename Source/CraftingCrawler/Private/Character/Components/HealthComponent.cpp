@@ -24,6 +24,7 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 	// Damage particle effects here?
 	
 	Health -= static_cast<int32>(Damage);
+	OnHealthChangedDelegate.Broadcast(Health);
 	if (Health <= 0)
 	{
 		GetOwner()->Destroy();

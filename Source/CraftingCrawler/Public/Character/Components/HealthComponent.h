@@ -7,6 +7,9 @@
 #include "HealthComponent.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, int32, NewHealthValue);
+
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CRAFTINGCRAWLER_API UHealthComponent : public UActorComponent
 {
@@ -17,6 +20,9 @@ public:
 	UHealthComponent();
 	
   	void InitHealthComponent(const int32 InMaxHealth);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnHealthChangedSignature OnHealthChangedDelegate;
 
 protected:
 	UFUNCTION()

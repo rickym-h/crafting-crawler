@@ -36,7 +36,21 @@ int32 UCrawlerGameInstance::GetAttack() const
 	return Attack;
 }
 
+int32 UCrawlerGameInstance::UpgradeAttack(const int32 AttackIncrement)
+{
+	Attack += AttackIncrement;
+	OnAttackChangedDelegate.Broadcast(Attack);
+	return Attack;
+}
+
 int32 UCrawlerGameInstance::GetDefence() const
 {
+	return Defence;
+}
+
+int32 UCrawlerGameInstance::UpgradeDefence(const int32 DefenceIncrement)
+{
+	Defence += DefenceIncrement;
+	OnDefenceChangedDelegate.Broadcast(Defence);
 	return Defence;
 }
