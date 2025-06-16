@@ -33,7 +33,7 @@ void ABaseEnemy::Destroyed()
 {
 	Super::Destroyed();
 	
-	if (UCrawlerGameInstance* GameInstance = CastChecked<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
+	if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
 	{
 		GameInstance->DecrementEnemyCount();
 	}
