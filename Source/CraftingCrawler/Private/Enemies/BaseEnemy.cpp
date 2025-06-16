@@ -45,3 +45,14 @@ void ABaseEnemy::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ABaseEnemy::AttackPrimary()
+{
+	bIsAttacking = true;
+	
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (PrimaryAttackMontage && AnimInstance && !AnimInstance->Montage_IsPlaying(PrimaryAttackMontage))
+	{
+		AnimInstance->Montage_Play(PrimaryAttackMontage);
+	}
+}
+
