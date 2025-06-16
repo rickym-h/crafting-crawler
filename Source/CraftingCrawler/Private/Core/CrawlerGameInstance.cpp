@@ -3,7 +3,7 @@
 
 #include "Core/CrawlerGameInstance.h"
 
-UCrawlerGameInstance::UCrawlerGameInstance(): DungeonDepth(1), Gold(0), Attack(1), Defence(0), HealthPotCount(0), HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
+UCrawlerGameInstance::UCrawlerGameInstance(): DungeonDepth(1), EnemyCount(0), Gold(0), Attack(1), Defence(0), HealthPotCount(0), HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
 {
 	OnGoldChangedDelegate.Broadcast(Gold);
 }
@@ -53,4 +53,23 @@ int32 UCrawlerGameInstance::UpgradeDefence(const int32 DefenceIncrement)
 	Defence += DefenceIncrement;
 	OnDefenceChangedDelegate.Broadcast(Defence);
 	return Defence;
+}
+
+int32 UCrawlerGameInstance::GetEnemyCount() const
+{
+	return EnemyCount;
+}
+
+int32 UCrawlerGameInstance::IncrementEnemyCount()
+{
+	EnemyCount++;
+	OnEnemiesChangedDelegate.Broadcast(EnemyCount);
+	return EnemyCount;
+}
+
+int32 UCrawlerGameInstance::DecrementEnemyCount()
+{
+	EnemyCount--;
+	OnEnemiesChangedDelegate.Broadcast(EnemyCount);
+	return EnemyCount;
 }

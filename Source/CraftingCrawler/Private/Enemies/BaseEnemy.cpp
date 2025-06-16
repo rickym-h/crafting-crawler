@@ -4,6 +4,7 @@
 #include "Enemies/BaseEnemy.h"
 
 #include "Character/Components/HealthComponent.h"
+#include "Core/CrawlerGameInstance.h"
 
 
 // Sets default values
@@ -21,7 +22,21 @@ void ABaseEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	HealthComponent->InitHealthComponent(1);
+
+	if (UCrawlerGameInstance* GameInstance = CastChecked<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
+	{
+		GameInstance->IncrementEnemyCount();
+	}
+}
+
+void ABaseEnemy::Destroyed()
+{
+	Super::Destroyed();
 	
+	if (UCrawlerGameInstance* GameInstance = CastChecked<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
+	{
+		GameInstance->DecrementEnemyCount();
+	}
 }
 
 // Called every frame
