@@ -50,6 +50,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void Move(const FInputActionValue& InputActionValue);
+	void InteractWithClosestInteractable();
 	
 	void ApplyDamageInRange(const float DamageAmount, const float Range);
 	

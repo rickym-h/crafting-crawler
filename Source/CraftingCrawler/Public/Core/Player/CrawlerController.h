@@ -29,6 +29,8 @@ protected:
 	void Move(const FInputActionValue& Value);
 	UFUNCTION()
 	void Primary(const FInputActionValue& Value);
+	UFUNCTION()
+	void Interact(const FInputActionValue& Value);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputMappingContext> MappingContext;
@@ -36,6 +38,8 @@ protected:
 	TObjectPtr<UInputAction> MoveAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
 	TObjectPtr<UInputAction> PrimaryAction;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	TObjectPtr<UInputAction> InteractAction;
 
 public:
 	// Called every frame
