@@ -34,6 +34,7 @@ void ACrawlerController::SetupInputComponent()
 	{
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACrawlerController::Move);
 		EnhancedInputComponent->BindAction(PrimaryAction, ETriggerEvent::Triggered, this, &ACrawlerController::Primary);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &ACrawlerController::Interact);
 	}
 }
 
@@ -53,6 +54,14 @@ void ACrawlerController::Primary(const FInputActionValue& Value)
 		CrawlerCharacter->AttackPrimary();
 	}
 	// TODO Otherwise - interact 
+}
+
+void ACrawlerController::Interact(const FInputActionValue& Value)
+{
+	if (ACrawlerCharacter* CrawlerCharacter = Cast<ACrawlerCharacter>(GetPawn()))
+	{
+		CrawlerCharacter->InteractWithClosestInteractable();
+	}
 }
 
 // Called every frame

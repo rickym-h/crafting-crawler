@@ -6,6 +6,7 @@
 #include "InputActionValue.h"
 #include "Core/CrawlerGameInstance.h"
 #include "Enemies/BaseEnemy.h"
+#include "Game/Interactable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -61,6 +62,49 @@ void ACrawlerCharacter::Move(const FInputActionValue& InputActionValue)
 
 	FRotator Direction = DirectionVector.Rotation() + FRotator(0.0f, 270.0f, 0.0f);
 	GetMesh()->SetRelativeRotation(Direction);
+}
+
+void ACrawlerCharacter::InteractWithClosestInteractable()
+{
+    // Set up parameters for the sphere overlap
+    constexpr float InteractionRadius = 200.0f;
+    const FVector CharacterLocation = GetActorLocation();
+    
+    // Perform sphere overlap to find all actors within range
+    TArray<AActor*> OverlappingActors;
+    UKismetSystemLibrary::SphereOverlapActors(
+        GetWorld(),
+        CharacterLocation,
+        InteractionRadius,
+        TArray<TEnumAsByte<EObjectTypeQuery>>(), // All object types
+        AActor::StaticClass(),
+        TArray<AActor*>(), // Actors to ignore
+        OverlappingActors
+    );
+
+    // Find the closest interactable
+    AActor* ClosestInteractable = nullptr;
+    float ClosestDistance = InteractionRadius;
+
+    for (AActor* Actor : OverlappingActors)
+    {
+        // Check if actor implements IInteractable interface
+        if (Actor && Actor->Implements<UInteractable>())
+        {
+            const float Distance = FVector::Distance(CharacterLocation, Actor->GetActorLocation());
+            if (Distance < ClosestDistance)
+            {
+                ClosestDistance = Distance;
+                ClosestInteractable = Actor;
+            }
+        }
+    }
+
+    // Interact with the closest interactable if found
+    if (ClosestInteractable)
+    {
+        IInteractable::Execute_Interact(ClosestInteractable);
+    }
 }
 
 void ACrawlerCharacter::ApplyDamageInRange(const float DamageAmount, const float Range)
