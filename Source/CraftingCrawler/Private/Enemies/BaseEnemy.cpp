@@ -3,8 +3,10 @@
 
 #include "Enemies/BaseEnemy.h"
 
+#include "Character/CrawlerCharacter.h"
 #include "Character/Components/HealthComponent.h"
 #include "Core/CrawlerGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 
 // Sets default values
@@ -14,6 +16,9 @@ ABaseEnemy::ABaseEnemy()
 	PrimaryActorTick.bCanEverTick = true;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("Health Component");
+
+	AttackCone = CreateDefaultSubobject<UStaticMeshComponent>("Attack Cone");
+	AttackCone->SetupAttachment(GetMesh());
 }
 
 // Called when the game starts or when spawned
@@ -27,6 +32,8 @@ void ABaseEnemy::BeginPlay()
 	{
 		GameInstance->IncrementEnemyCount();
 	}
+
+	AttackCone->SetCollisionResponseToAllChannels(ECR_Overlap);
 }
 
 void ABaseEnemy::Destroyed()
@@ -53,6 +60,17 @@ void ABaseEnemy::AttackPrimary()
 	if (PrimaryAttackMontage && AnimInstance && !AnimInstance->Montage_IsPlaying(PrimaryAttackMontage))
 	{
 		AnimInstance->Montage_Play(PrimaryAttackMontage);
+	}
+}
+
+void ABaseEnemy::DealDamage()
+{	
+	TArray<AActor*> HitActors;
+	AttackCone->GetOverlappingActors(HitActors, ACrawlerCharacter::StaticClass());
+
+	for (const auto Enemy : HitActors)
+	{		
+		UGameplayStatics::ApplyDamage(Enemy, DamageAmount, GetController(), this, UDamageType::StaticClass());
 	}
 }
 

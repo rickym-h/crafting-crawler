@@ -29,6 +29,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UAnimMontage> PrimaryAttackMontage;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UStaticMeshComponent> AttackCone;
 
 public:
 	// Called every frame
@@ -36,6 +39,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void AttackPrimary();
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void DealDamage();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	int32 DamageAmount = 1;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool bIsAttacking;
