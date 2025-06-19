@@ -32,6 +32,11 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> AttackCone;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
+	float NormalSpeed = 100.0f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
+	float ChaseSpeed = 300.0f;
 
 public:
 	// Called every frame
@@ -39,13 +44,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void AttackPrimary();
-
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void DealDamage();
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	int32 DamageAmount = 1;
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool bIsAttacking;
+	
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void BeginChasing();
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void StopChasing();
 };

@@ -6,6 +6,7 @@
 #include "Character/CrawlerCharacter.h"
 #include "Character/Components/HealthComponent.h"
 #include "Core/CrawlerGameInstance.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -72,5 +73,15 @@ void ABaseEnemy::DealDamage()
 	{		
 		UGameplayStatics::ApplyDamage(Enemy, DamageAmount, GetController(), this, UDamageType::StaticClass());
 	}
+}
+
+void ABaseEnemy::BeginChasing()
+{
+	Cast<UCharacterMovementComponent>(GetMovementComponent())->MaxWalkSpeed = ChaseSpeed;
+}
+
+void ABaseEnemy::StopChasing()
+{
+	Cast<UCharacterMovementComponent>(GetMovementComponent())->MaxWalkSpeed = NormalSpeed;
 }
 
