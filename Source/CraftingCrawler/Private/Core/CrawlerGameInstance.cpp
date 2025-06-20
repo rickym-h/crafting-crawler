@@ -73,3 +73,9 @@ int32 UCrawlerGameInstance::DecrementEnemyCount()
 	OnEnemiesChangedDelegate.Broadcast(EnemyCount);
 	return EnemyCount;
 }
+
+int32 UCrawlerGameInstance::IncrementDepth()
+{
+	DungeonDepth++;
+	return DungeonDepth;
+}

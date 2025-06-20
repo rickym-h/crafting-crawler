@@ -64,6 +64,8 @@ protected:
 	// Game
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 DungeonDepth;
+	UFUNCTION(BlueprintCallable)
+	int32 IncrementDepth();
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	int32 EnemyCount;
 
