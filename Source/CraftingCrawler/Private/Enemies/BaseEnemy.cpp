@@ -33,6 +33,7 @@ void ABaseEnemy::BeginPlay()
 		GameInstance->IncrementEnemyCount();
 		HealthComponent->InitHealthComponent(GameInstance->GetDungeonDepth());
 		AttackRange *= 1.1 * GameInstance->GetDungeonDepth();
+		AttackPlayRate = 1.1 * GameInstance->GetDungeonDepth();
 	}
 	AttackCone->SetWorldScale3D(FVector(AttackRange));
 }
@@ -60,7 +61,7 @@ void ABaseEnemy::AttackPrimary()
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	if (PrimaryAttackMontage && AnimInstance && !AnimInstance->Montage_IsPlaying(PrimaryAttackMontage))
 	{
-		AnimInstance->Montage_Play(PrimaryAttackMontage);
+		AnimInstance->Montage_Play(PrimaryAttackMontage, AttackPlayRate);
 	}
 }
 
