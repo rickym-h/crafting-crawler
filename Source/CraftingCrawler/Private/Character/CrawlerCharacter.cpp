@@ -122,6 +122,8 @@ void ACrawlerCharacter::ApplyDamageInRange(const float DamageAmount, const float
 
 void ACrawlerCharacter::AttackPrimary()
 {
+	if (bIsAttacking) return;
+	
 	bIsAttacking = true;
 	
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();

@@ -25,6 +25,7 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 	
 	Health -= static_cast<int32>(Damage);
 	OnHealthChangedDelegate.Broadcast(Health);
+	UE_LOG(LogTemp, Warning, TEXT("Health: %d/%d"), Health, MaxHealth);
 	if (Health <= 0)
 	{
 		GetOwner()->Destroy();

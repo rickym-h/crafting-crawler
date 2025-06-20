@@ -20,21 +20,20 @@ ABaseEnemy::ABaseEnemy()
 
 	AttackCone = CreateDefaultSubobject<UStaticMeshComponent>("Attack Cone");
 	AttackCone->SetupAttachment(GetMesh());
+	AttackCone->SetCollisionResponseToAllChannels(ECR_Overlap);
 }
 
 // Called when the game starts or when spawned
 void ABaseEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-
-	HealthComponent->InitHealthComponent(1);
-
+	
 	if (UCrawlerGameInstance* GameInstance = CastChecked<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
 	{
 		GameInstance->IncrementEnemyCount();
+		HealthComponent->InitHealthComponent(GameInstance->GetDungeonDepth());
+		AttackRange *= 1.1 * GameInstance->GetDungeonDepth();
 	}
-
-	AttackCone->SetCollisionResponseToAllChannels(ECR_Overlap);
 	AttackCone->SetWorldScale3D(FVector(AttackRange));
 }
 

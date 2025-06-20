@@ -59,6 +59,10 @@ public:
 	int32 IncrementEnemyCount();
 	UFUNCTION(BlueprintCallable)
 	int32 DecrementEnemyCount();
+	int32 GetDungeonDepth() const
+	{
+		return DungeonDepth;
+	}
 
 protected:
 	// Game
