@@ -35,6 +35,7 @@ void ABaseEnemy::BeginPlay()
 	}
 
 	AttackCone->SetCollisionResponseToAllChannels(ECR_Overlap);
+	AttackCone->SetWorldScale3D(FVector(AttackRange));
 }
 
 void ABaseEnemy::Destroyed()
@@ -65,7 +66,8 @@ void ABaseEnemy::AttackPrimary()
 }
 
 void ABaseEnemy::DealDamage()
-{	
+{
+	AttackCone->SetWorldScale3D(FVector(AttackRange));
 	TArray<AActor*> HitActors;
 	AttackCone->GetOverlappingActors(HitActors, ACrawlerCharacter::StaticClass());
 

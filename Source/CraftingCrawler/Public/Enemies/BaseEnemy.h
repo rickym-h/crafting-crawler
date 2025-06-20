@@ -48,6 +48,8 @@ public:
 	void DealDamage();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	int32 DamageAmount = 1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	float AttackRange = 1;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
 	bool bIsAttacking;
 	

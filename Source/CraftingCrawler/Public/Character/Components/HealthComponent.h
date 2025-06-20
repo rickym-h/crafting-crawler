@@ -18,7 +18,8 @@ class CRAFTINGCRAWLER_API UHealthComponent : public UActorComponent
 public:
 	// Sets default values for this component's properties
 	UHealthComponent();
-	
+
+	UFUNCTION(BlueprintCallable)
   	void InitHealthComponent(const int32 InMaxHealth);
 
 	UPROPERTY(BlueprintAssignable)
