@@ -23,6 +23,15 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChangedSignature OnHealthChangedDelegate;
+	int32 GetHealth() const
+	{
+		return Health;
+	}
+
+	int32 GetMaxHealth() const
+	{
+		return MaxHealth;
+	}
 
 protected:
 	UFUNCTION()
@@ -33,6 +42,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	int32 Health;
+
+protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
 	int32 MaxHealth;
 };

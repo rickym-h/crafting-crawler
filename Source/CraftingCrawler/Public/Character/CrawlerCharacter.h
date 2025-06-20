@@ -36,7 +36,14 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UHealthComponent> HealthComponent;
-	
+
+public:
+	TObjectPtr<UHealthComponent> GetHealthComponent() const
+	{
+		return HealthComponent;
+	}
+
+protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> AttackCone;
 

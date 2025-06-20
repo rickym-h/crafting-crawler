@@ -6,7 +6,7 @@
 #include "InputActionValue.h"
 #include "Core/CrawlerGameInstance.h"
 #include "Enemies/BaseEnemy.h"
-#include "Game/Interactable.h"
+#include "Interactables/Interactable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 

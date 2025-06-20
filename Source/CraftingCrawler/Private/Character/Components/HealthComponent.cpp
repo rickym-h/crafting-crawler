@@ -54,4 +54,5 @@ void UHealthComponent::InitHealthComponent(const int32 InMaxHealth)
 {
 	MaxHealth = InMaxHealth;
 	Health = MaxHealth;
+	OnHealthChangedDelegate.Broadcast(Health);
 }
