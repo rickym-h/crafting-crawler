@@ -36,6 +36,12 @@ void ABaseEnemy::BeginPlay()
 		AttackPlayRate = 1.1 * GameInstance->GetDungeonDepth();
 	}
 	AttackCone->SetWorldScale3D(FVector(AttackRange));
+	
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance)
+	{
+		AnimInstance->OnMontageEnded.AddUniqueDynamic(this, &ABaseEnemy::HandleOnAttackMontageComplete);
+	}
 }
 
 void ABaseEnemy::Destroyed()
@@ -48,14 +54,20 @@ void ABaseEnemy::Destroyed()
 	}
 }
 
+void ABaseEnemy::HandleOnAttackMontageComplete(UAnimMontage* Montage, bool bInterrupted)
+{
+	bIsAttacking = false;
+}
+
 // Called every frame
 void ABaseEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
-void ABaseEnemy::AttackPrimary()
+bool ABaseEnemy::AttackPrimary()
 {
+	if (bIsAttacking) return true;
 	bIsAttacking = true;
 	
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
@@ -63,6 +75,7 @@ void ABaseEnemy::AttackPrimary()
 	{
 		AnimInstance->Montage_Play(PrimaryAttackMontage, AttackPlayRate);
 	}
+	return true;
 }
 
 void ABaseEnemy::DealDamage()

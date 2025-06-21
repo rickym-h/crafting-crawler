@@ -29,6 +29,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UAnimMontage> PrimaryAttackMontage;
+	UFUNCTION()
+	void HandleOnAttackMontageComplete(UAnimMontage* Montage, bool bInterrupted);
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> AttackCone;
@@ -43,7 +45,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Combat")
-	void AttackPrimary();
+	bool AttackPrimary();
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void DealDamage();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
@@ -52,7 +54,7 @@ public:
 	float AttackRange = 1;
 	float AttackPlayRate = 1;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
-	bool bIsAttacking;
+	bool bIsAttacking = false;
 	
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void BeginChasing();
