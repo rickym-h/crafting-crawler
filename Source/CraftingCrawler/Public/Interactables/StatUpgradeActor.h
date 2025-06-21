@@ -31,8 +31,8 @@ protected:
 	bool StatUpgradeImplementation();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Purchasing")
 	FString InteractText;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Purchasing")
-	int32 Cost;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Upgrades")
+	int32 UpgradeCost;
 
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
 	bool UpgradeAttack(const int32 Amount) const;
@@ -41,6 +41,4 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
 	bool UpgradeHealth(const int32 HealthIncrement) const;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Upgrades")
-	int32 UpgradeCost;
 };

@@ -35,7 +35,7 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 		{
 			if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this)))
 			{
-				GameInstance->AddGold(5);
+				GameInstance->AddGold(GameInstance->GetDungeonDepth());
 			}
 		}
 	}

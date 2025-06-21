@@ -93,7 +93,7 @@ void ACrawlerCharacter::InteractWithClosestInteractable()
 AActor* ACrawlerCharacter::GetClosestInteractable()
 {
 	// Set up parameters for the sphere overlap
-	constexpr float InteractionRadius = 30.0f;
+	constexpr float InteractionRadius = 100.0f;
 
 	const FVector CharacterLocation = GetActorLocation();
 
