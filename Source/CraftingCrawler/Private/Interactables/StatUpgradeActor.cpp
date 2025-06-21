@@ -33,7 +33,7 @@ bool AStatUpgradeActor::Interact_Implementation()
 
 FString AStatUpgradeActor::InteractToolTip_Implementation()
 {
-	return "DEFAULT IMPLEMENTATION";
+	return InteractText;
 }
 
 bool AStatUpgradeActor::UpgradeAttack(const int32 Amount) const

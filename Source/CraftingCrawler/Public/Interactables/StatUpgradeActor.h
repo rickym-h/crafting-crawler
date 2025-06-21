@@ -29,6 +29,10 @@ protected:
 	virtual FString InteractToolTip_Implementation() override;
 	UFUNCTION(BlueprintImplementableEvent)
 	bool StatUpgradeImplementation();
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Purchasing")
+	FString InteractText;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Purchasing")
+	int32 Cost;
 
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
 	bool UpgradeAttack(const int32 Amount) const;

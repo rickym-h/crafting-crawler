@@ -93,35 +93,36 @@ void ACrawlerCharacter::InteractWithClosestInteractable()
 AActor* ACrawlerCharacter::GetClosestInteractable()
 {
 	// Set up parameters for the sphere overlap
-	constexpr float InteractionRadius = 200.0f;
+	constexpr float InteractionRadius = 30.0f;
+
 	const FVector CharacterLocation = GetActorLocation();
-    
+
 	// Perform sphere overlap to find all actors within range
-	TArray<AActor*> OverlappingActors;
-	UKismetSystemLibrary::SphereOverlapActors(
+	TArray<UPrimitiveComponent*> OverlappingComponents;
+	UKismetSystemLibrary::SphereOverlapComponents(
 		GetWorld(),
 		CharacterLocation,
 		InteractionRadius,
 		TArray<TEnumAsByte<EObjectTypeQuery>>(), // All object types
-		AActor::StaticClass(),
+		UPrimitiveComponent::StaticClass(),
 		TArray<AActor*>(), // Actors to ignore
-		OverlappingActors
+		OverlappingComponents
 	);
 
 	// Find the closest interactable
 	AActor* ClosestInteractable = nullptr;
-	float ClosestDistance = InteractionRadius;
+	float ClosestDistance = INT_MAX;
 
-	for (AActor* Actor : OverlappingActors)
+	for (UPrimitiveComponent* Component : OverlappingComponents)
 	{
 		// Check if actor implements IInteractable interface
-		if (Actor && Actor->Implements<UInteractable>())
+		if (Component && Component->GetOwner()->Implements<UInteractable>())
 		{
-			const float Distance = FVector::Distance(CharacterLocation, Actor->GetActorLocation());
+			const float Distance = FVector::Distance(CharacterLocation, Component->GetOwner()->GetActorLocation());
 			if (Distance < ClosestDistance)
 			{
 				ClosestDistance = Distance;
-				ClosestInteractable = Actor;
+				ClosestInteractable = Component->GetOwner();
 			}
 		}
 	}
