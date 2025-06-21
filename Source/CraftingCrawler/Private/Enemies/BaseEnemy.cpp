@@ -32,8 +32,10 @@ void ABaseEnemy::BeginPlay()
 	{
 		GameInstance->IncrementEnemyCount();
 		HealthComponent->InitHealthComponent(GameInstance->GetDungeonDepth());
-		AttackRange *= 1.1 * GameInstance->GetDungeonDepth();
-		AttackPlayRate = 1.1 * GameInstance->GetDungeonDepth();
+		AttackRange *= (1+(0.1 * GameInstance->GetDungeonDepth()));
+		AttackPlayRate = (1+(0.1 * GameInstance->GetDungeonDepth()));
+		NormalSpeed *= (1+(0.1 * GameInstance->GetDungeonDepth()));
+		ChaseSpeed *= (1+(0.1 * GameInstance->GetDungeonDepth()));
 	}
 	AttackCone->SetWorldScale3D(FVector(AttackRange));
 	
