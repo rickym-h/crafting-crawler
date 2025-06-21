@@ -63,6 +63,11 @@ public:
 	{
 		return DungeonDepth;
 	}
+	UFUNCTION(BlueprintCallable)
+	void ResetDungeonDepth()
+	{
+		DungeonDepth = 1;
+	}
 
 protected:
 	// Game
