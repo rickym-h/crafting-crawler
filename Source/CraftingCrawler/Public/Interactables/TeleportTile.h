@@ -35,5 +35,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TObjectPtr<UBoxComponent> OverlapTrigger;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	FString InteractText;
 };

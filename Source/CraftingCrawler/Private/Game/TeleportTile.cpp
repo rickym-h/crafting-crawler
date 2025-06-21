@@ -37,7 +37,14 @@ bool ATeleportTile::Interact_Implementation()
 
 FString ATeleportTile::InteractToolTip_Implementation()
 {
-	return "DEFAULT TEXT";
+	const UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(GetGameInstance());
+	if (!GameInstance) return "Error: ATeleportTile::InteractToolTip_Implementation() Cannot resolve GameInstance.";
+
+	if (GameInstance->GetEnemyCount() <= 0)
+	{
+		return InteractText;
+	}
+	return "";
 }
 
 // Called when the game starts or when spawned

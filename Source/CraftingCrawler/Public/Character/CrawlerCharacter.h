@@ -11,6 +11,8 @@
 #include "CrawlerCharacter.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnToolTipTextUpdated, FString, NewTooltip);
+
 struct FInputActionValue;
 
 UCLASS()
@@ -21,6 +23,31 @@ class CRAFTINGCRAWLER_API ACrawlerCharacter : public ACharacter
 public:
 	// Sets default values for this pawn's properties
 	ACrawlerCharacter();
+	TObjectPtr<UHealthComponent> GetHealthComponent() const
+	{
+		return HealthComponent;
+	}
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void Move(const FInputActionValue& InputActionValue);
+	void InteractWithClosestInteractable();
+	AActor* GetClosestInteractable();
+	
+	void ApplyDamageInRange(const float DamageAmount, const float Range);
+	
+	void AttackPrimary();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
+	bool bIsAttacking;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Interaction")
+	FString CurrentInteractionTooltipText = "";
+	UPROPERTY(BlueprintAssignable)
+	FOnToolTipTextUpdated OnToolTipTextUpdated;
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,33 +64,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UHealthComponent> HealthComponent;
 
-public:
-	TObjectPtr<UHealthComponent> GetHealthComponent() const
-	{
-		return HealthComponent;
-	}
-
-protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> AttackCone;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<UAnimMontage> PrimaryAttackMontage;
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	void Move(const FInputActionValue& InputActionValue);
-	void InteractWithClosestInteractable();
-	
-	void ApplyDamageInRange(const float DamageAmount, const float Range);
-	
-	void AttackPrimary();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Combat")
-	bool bIsAttacking;
 	
 };

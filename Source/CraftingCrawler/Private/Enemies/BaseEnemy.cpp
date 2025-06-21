@@ -31,7 +31,7 @@ void ABaseEnemy::BeginPlay()
 	if (UCrawlerGameInstance* GameInstance = CastChecked<UCrawlerGameInstance>(GetWorld()->GetGameInstance()))
 	{
 		GameInstance->IncrementEnemyCount();
-		HealthComponent->InitHealthComponent(GameInstance->GetDungeonDepth());
+		HealthComponent->InitHealthComponent(FMath::Max(1, GameInstance->GetDungeonDepth()/2));
 		AttackRange *= (1+(0.1 * GameInstance->GetDungeonDepth()));
 		AttackPlayRate = (1+(0.1 * GameInstance->GetDungeonDepth()));
 		NormalSpeed *= (1+(0.1 * GameInstance->GetDungeonDepth()));
