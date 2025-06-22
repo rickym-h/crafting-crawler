@@ -3,6 +3,7 @@
 
 #include "Character/Components/HealthComponent.h"
 
+#include "Character/CrawlerCharacter.h"
 #include "Core/CrawlerGameInstance.h"
 #include "Enemies/BaseEnemy.h"
 #include "Kismet/GameplayStatics.h"
@@ -22,6 +23,13 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 	AActor* DamageCauser)
 {
 	// Damage particle effects here?
+	if (Cast<ACrawlerCharacter>(DamagedActor))
+	{
+		if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this)))
+		{
+			Damage = FMath::Max(1, Damage - (GameInstance->GetDefence()));
+		}
+	}
 	
 	Health -= static_cast<int32>(Damage);
 	OnHealthChangedDelegate.Broadcast(Health);
