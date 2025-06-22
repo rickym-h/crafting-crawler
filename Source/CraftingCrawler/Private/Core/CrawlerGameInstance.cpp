@@ -3,7 +3,9 @@
 
 #include "Core/CrawlerGameInstance.h"
 
-UCrawlerGameInstance::UCrawlerGameInstance(): DungeonDepth(1), EnemyCount(0), Gold(100000), Attack(1), Defence(0), HealthPotCount(0), HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
+UCrawlerGameInstance::UCrawlerGameInstance(): DungeonDepth(1), EnemyCount(0), Gold(0), Attack(1), Defence(0), MaxHealth(3), CurrentHealth(3),
+                                              HealthPotCount(0),
+                                              HealthPotEfficacy(1), StaminaPotCount(0), StaminaPotEfficacy(1)
 {
 	OnGoldChangedDelegate.Broadcast(Gold);
 }

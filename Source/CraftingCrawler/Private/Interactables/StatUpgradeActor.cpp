@@ -73,6 +73,8 @@ bool AStatUpgradeActor::UpgradeHealth(const int32 HealthIncrement)
 	if (GameInstance->SpendGold(UpgradeCost))
 	{
 		CrawlerCharacter->GetHealthComponent()->InitHealthComponent(CrawlerCharacter->GetHealthComponent()->GetMaxHealth() + HealthIncrement);
+		GameInstance->MaxHealth = CrawlerCharacter->GetHealthComponent()->GetMaxHealth();
+		GameInstance->CurrentHealth = GameInstance->MaxHealth;
 		return true;
 	}
 	return false;

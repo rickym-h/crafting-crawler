@@ -68,6 +68,10 @@ public:
 	{
 		DungeonDepth = 1;
 	}
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int32 MaxHealth;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	int32 CurrentHealth;
 
 protected:
 	// Game

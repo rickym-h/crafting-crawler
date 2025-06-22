@@ -35,7 +35,7 @@ void UHealthComponent::OnOwnerTakeDamage(AActor* DamagedActor, float Damage, con
 		{
 			if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this)))
 			{
-				GameInstance->AddGold(GameInstance->GetDungeonDepth());
+				GameInstance->AddGold(FMath::Pow(GameInstance->GetDungeonDepth(), 2.f));
 			}
 		}
 	}
@@ -55,5 +55,12 @@ void UHealthComponent::InitHealthComponent(const int32 InMaxHealth)
 {
 	MaxHealth = InMaxHealth;
 	Health = MaxHealth;
+	OnHealthChangedDelegate.Broadcast(Health);
+}
+
+void UHealthComponent::InitHealthComponent(const int32 InMaxHealth, const int32 CurrentHealth)
+{
+	MaxHealth = InMaxHealth;
+	Health = CurrentHealth;
 	OnHealthChangedDelegate.Broadcast(Health);
 }

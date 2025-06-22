@@ -21,6 +21,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
   	void InitHealthComponent(const int32 InMaxHealth);
+  	void InitHealthComponent(const int32 InMaxHealth, const int32 CurrentHealth);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChangedSignature OnHealthChangedDelegate;

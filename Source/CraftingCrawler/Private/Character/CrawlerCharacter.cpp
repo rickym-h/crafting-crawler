@@ -25,7 +25,6 @@ ACrawlerCharacter::ACrawlerCharacter()
 	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
-	HealthComponent->InitHealthComponent(3);
 
 	AttackCone = CreateDefaultSubobject<UStaticMeshComponent>("Attack Cone");
 	AttackCone->SetupAttachment(GetMesh());
@@ -35,6 +34,11 @@ ACrawlerCharacter::ACrawlerCharacter()
 void ACrawlerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(GetGameInstance()))
+	{
+		HealthComponent->InitHealthComponent(GameInstance->MaxHealth, GameInstance->CurrentHealth);
+	}
 	
 }
 
