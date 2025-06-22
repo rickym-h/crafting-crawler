@@ -35,10 +35,10 @@ protected:
 	int32 UpgradeCost;
 
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
-	bool UpgradeAttack(const int32 Amount) const;
+	bool UpgradeAttack(const int32 Amount);
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
-	bool UpgradeDefence(const int32 Amount) const;
+	bool UpgradeDefence(const int32 Amount);
 	UFUNCTION(BlueprintCallable, Category = "Upgrades")
-	bool UpgradeHealth(const int32 HealthIncrement) const;
+	bool UpgradeHealth(const int32 HealthIncrement);
 
 };

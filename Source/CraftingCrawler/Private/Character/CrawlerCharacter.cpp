@@ -111,7 +111,7 @@ AActor* ACrawlerCharacter::GetClosestInteractable()
 
 	// Find the closest interactable
 	AActor* ClosestInteractable = nullptr;
-	float ClosestDistance = INT_MAX;
+	float ClosestDistance = TNumericLimits<float>::Max();
 
 	for (UPrimitiveComponent* Component : OverlappingComponents)
 	{

@@ -36,7 +36,7 @@ FString AStatUpgradeActor::InteractToolTip_Implementation()
 	return InteractText;
 }
 
-bool AStatUpgradeActor::UpgradeAttack(const int32 Amount) const
+bool AStatUpgradeActor::UpgradeAttack(const int32 Amount)
 {
 	UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this));
 	if (!GameInstance) return false;
@@ -49,7 +49,7 @@ bool AStatUpgradeActor::UpgradeAttack(const int32 Amount) const
 	return false;
 }
 
-bool AStatUpgradeActor::UpgradeDefence(const int32 Amount) const
+bool AStatUpgradeActor::UpgradeDefence(const int32 Amount)
 {
 	UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this));
 	if (!GameInstance) return false;
@@ -62,7 +62,7 @@ bool AStatUpgradeActor::UpgradeDefence(const int32 Amount) const
 	return false;
 }
 
-bool AStatUpgradeActor::UpgradeHealth(const int32 HealthIncrement) const
+bool AStatUpgradeActor::UpgradeHealth(const int32 HealthIncrement)
 {
 	UCrawlerGameInstance* GameInstance = Cast<UCrawlerGameInstance>(UGameplayStatics::GetGameInstance(this));
 	if (!GameInstance) return false;
